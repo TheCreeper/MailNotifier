@@ -37,7 +37,7 @@ func GenerateConfig() ([]byte, error) {
 
 	cfg := &ClientConfig{
 
-		CheckFrequency: 1,
+		CheckFrequency: 20,
 
 		Proxys: []Proxy{
 
