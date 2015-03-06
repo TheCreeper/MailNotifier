@@ -18,7 +18,7 @@ var (
 	Debug bool
 
 	// Tray icon switch
-	ShowIcon bool
+	//ShowIcon bool
 
 	// Generate sameple configuration switch
 	GenConfig bool
@@ -33,7 +33,7 @@ var (
 func init() {
 
 	flag.BoolVar(&Debug, "v", false, "debugging/verbose information")
-	flag.BoolVar(&ShowIcon, "i", false, "Show a icon in the statusbar/tray")
+	//flag.BoolVar(&ShowIcon, "i", false, "Show a icon in the statusbar/tray")
 	flag.BoolVar(&GenConfig, "g", false, "Generate a configuration file")
 	flag.StringVar(&ConfigFile, "f", "", "The configuration file in which the user settings are stored")
 	flag.StringVar(&DatabaseFile, "d", "", "The directory in which the database will be stored")
@@ -85,12 +85,12 @@ func init() {
 
 func main() {
 
-	d, err := InitDB(DatabaseFile)
+	dbo, err := InitDB(DatabaseFile)
 	if err != nil {
 
 		log.Fatal(err)
 	}
-	db = d
+	db = dbo
 
 	cfg, err := GetCFG()
 	if err != nil {
@@ -102,11 +102,6 @@ func main() {
 
 		wg.Add(1)
 		go cfg.LaunchPOP3Client(&wg, &cfg.Accounts[i])
-	}
-
-	if ShowIcon {
-
-		ShowStatusIcon()
 	}
 
 	wg.Wait()

@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TheCreeper/go-notification"
+	"github.com/TheCreeper/go-notify"
 	"github.com/TheCreeper/go-pop3"
 )
 
@@ -65,14 +65,14 @@ func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
 				log.Fatal(err)
 			}
 
-			n := &notification.Message{
+			n := &notify.Message{
 
 				Title:     fmt.Sprintf("From: %s ", m.Header.Get("From")),
 				Body:      fmt.Sprintf("Subject: %s ", m.Header.Get("Subject")),
 				Icon:      "/usr/share/icons/gnome/32x32/status/mail-unread.png",
 				SoundPipe: LetterArriveSound,
 			}
-			if err = n.Push(); err != nil {
+			if err = n.Send(); err != nil {
 
 				log.Fatal(err)
 			}

@@ -1,6 +1,6 @@
 package main
 
-import (
+/*import (
 	"runtime"
 
 	"github.com/cratonica/trayhost"
@@ -16,4 +16,4 @@ func ShowStatusIcon() {
 
 	// Enter the host system's event loop
 	trayhost.EnterLoop("MailNotify", iconData)
-}
+}*/
