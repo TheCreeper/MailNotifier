@@ -69,7 +69,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
 
 				Title:     fmt.Sprintf("From: %s ", m.Header.Get("From")),
 				Body:      fmt.Sprintf("Subject: %s ", m.Header.Get("Subject")),
-				Icon:      "/usr/share/icons/gnome/32x32/status/mail-unread.png",
+				Icon:      "mail-unread",
 				SoundPipe: LetterArriveSound,
 			}
 			if err = n.Send(); err != nil {
