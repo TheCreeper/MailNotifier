@@ -15,7 +15,7 @@ var (
 	db *Database
 
 	// Debug/Verbose switch
-	Debug bool
+	Verbose bool
 
 	// Tray icon switch
 	//ShowIcon bool
@@ -32,7 +32,7 @@ var (
 
 func init() {
 
-	flag.BoolVar(&Debug, "v", false, "debugging/verbose information")
+	flag.BoolVar(&Verbose, "v", false, "debugging/verbose information")
 	//flag.BoolVar(&ShowIcon, "i", false, "Show a icon in the statusbar/tray")
 	flag.BoolVar(&GenConfig, "g", false, "Generate a configuration file")
 	flag.StringVar(&ConfigFile, "f", "", "The configuration file in which the user settings are stored")
@@ -98,10 +98,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for i, _ := range cfg.Accounts {
+	for _, v := range cfg.Accounts {
+
+		if Verbose {
+
+			log.Printf("Starting POP3 client for %s", v.Address)
+		}
 
 		wg.Add(1)
-		go cfg.LaunchPOP3Client(&wg, &cfg.Accounts[i])
+		go cfg.LaunchPOP3Client(&v)
 	}
 
 	wg.Wait()

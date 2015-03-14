@@ -17,18 +17,16 @@ type ClientConfig struct {
 
 type Proxy struct {
 	Name     string
-	Type     string
 	Address  string
-	Username string
+	User     string
 	Password string
-	Timeout  int
 }
 
 type Account struct {
 
 	// Connection Info
-	Host     string
-	Username string
+	Address  string
+	User     string
 	Password string
 	Proxy    string
 }
@@ -43,19 +41,17 @@ func GenerateConfig() ([]byte, error) {
 
 			{
 				Name:     "tor",
-				Type:     "socks5",
 				Address:  "127.0.0.1:9050",
-				Username: "",
+				User:     "",
 				Password: "",
-				Timeout:  5,
 			},
 		},
 
 		Accounts: []Account{
 
 			{
-				Host:     "pop3.riseup.net:995",
-				Username: "example",
+				Address:  "pop3.riseup.net:995",
+				User:     "example",
 				Password: "password",
 				Proxy:    "",
 			},
@@ -68,7 +64,7 @@ func (cfg *ClientConfig) GetProxyInfo(n string) (Proxy, error) {
 
 	for _, v := range cfg.Proxys {
 
-		if !(v.Name == n) {
+		if v.Name != n {
 
 			continue
 		}

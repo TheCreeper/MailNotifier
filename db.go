@@ -8,17 +8,34 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// Some errors
+const (
+
+	// name of the table that is used for the message cache
+	MsgTableName = "MessageCache"
+
+	// statement used to create the cache table
+	MsgTableCreateStmt = "CREATE TABLE `MessageCache` (`user_id` TEXT, `message_id` TEXT)"
+
+	// statement used to insert new messages into the cache
+	MsgTableInsertStmt = "INSERT INTO `MessageCache` (`user_id`, `message_id`) VALUES ('%s', '%s')"
+
+	// statement used to remove messages from the cache
+	MsgTableRemoveStmt = "DELETE FROM `MessageCache` WHERE user_id='%s' AND message_id='%s'"
+
+	// statement used to get all records in the message cache
+	MsgTableGetStmt = "SELECT `message_id` FROM `MessageCache` WHERE user_id='%s'"
+
+	// statement used to check if table exists
+	TableExistStmt = "SELECT `name` FROM `sqlite_master` WHERE name='%s'"
+)
+
+// some errors
 var (
 	ErrDBNotAlive   = errors.New("DB not alive")
 	ErrDoesNotExist = errors.New("Database does not exist")
 )
 
-type Database struct {
-
-	// Database object
-	*sql.DB
-}
+type Database struct{ *sql.DB }
 
 func InitDB(p string) (db *Database, err error) {
 
@@ -35,14 +52,14 @@ func InitDB(p string) (db *Database, err error) {
 		return nil, ErrDBNotAlive
 	}
 
-	ok, err := db.TableExists("MessageCache")
+	ok, err := db.TableExists(MsgTableName)
 	if err != nil {
 
 		return
 	}
 	if !ok {
 
-		if _, err := db.DB.Exec("CREATE TABLE `MessageCache` (`user_id` TEXT, `message_id` TEXT)"); err != nil {
+		if _, err := db.DB.Exec(MsgTableCreateStmt); err != nil {
 
 			return nil, err
 		}
@@ -58,7 +75,7 @@ func (db *Database) TableExists(n string) (ok bool, err error) {
 		return false, ErrDBNotAlive
 	}
 
-	rows, err := db.DB.Query(fmt.Sprintf("SELECT `name` FROM `sqlite_master` WHERE name='%s'", n))
+	rows, err := db.DB.Query(fmt.Sprintf(TableExistStmt, n))
 	if err != nil {
 
 		return
@@ -74,7 +91,7 @@ func (db *Database) AddMessageToCache(userid, msgid string) error {
 		return ErrDBNotAlive
 	}
 
-	if _, err := db.DB.Exec(fmt.Sprintf("INSERT INTO `MessageCache` (`user_id`, `message_id`) VALUES ('%s', '%s')", userid, msgid)); err != nil {
+	if _, err := db.DB.Exec(fmt.Sprintf(MsgTableInsertStmt, userid, msgid)); err != nil {
 
 		return err
 	}
@@ -89,7 +106,7 @@ func (db *Database) RemoveMessageFromCache(userid, msgid string) (err error) {
 		return ErrDBNotAlive
 	}
 
-	if _, err := db.DB.Exec(fmt.Sprintf("DELETE FROM `MessageCache` WHERE user_id='%s' AND message_id='%s'", userid, msgid)); err != nil {
+	if _, err := db.DB.Exec(fmt.Sprintf(MsgTableRemoveStmt, userid, msgid)); err != nil {
 
 		return err
 	}
@@ -104,7 +121,7 @@ func (db *Database) GetMessageCache(userid string) (c []string, err error) {
 		return nil, ErrDBNotAlive
 	}
 
-	rows, err := db.DB.Query(fmt.Sprintf("SELECT `message_id` FROM `MessageCache` WHERE user_id='%s'", userid))
+	rows, err := db.DB.Query(fmt.Sprintf(MsgTableGetStmt, userid))
 	if err != nil {
 
 		return

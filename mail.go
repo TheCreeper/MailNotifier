@@ -3,30 +3,31 @@ package main
 import (
 	"fmt"
 	"log"
-	"sync"
 	"time"
 
 	"github.com/TheCreeper/go-notify"
 	"github.com/TheCreeper/go-pop3"
 )
 
-func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
+func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 
 	for {
 
-		c, err := pop3.DialTLS(acc.Host)
+		c, err := pop3.DialTLS(acc.Address)
 		if err != nil {
 
-			log.Fatal(err)
-		}
-		defer c.Quit()
+			log.Print(err)
 
-		if err = c.Auth(acc.Username, acc.Password); err != nil {
-
-			log.Fatal(err)
+			time.Sleep(time.Duration(cfg.CheckFrequency) * time.Minute)
+			break
 		}
 
-		if Debug {
+		if err = c.Auth(acc.User, acc.Password); err != nil {
+
+			log.Fatal(err)
+		}
+
+		if Verbose {
 
 			count, size, err := c.Stat()
 			if err != nil {
@@ -44,7 +45,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
 		}
 		for _, v := range messages {
 
-			ok, err := db.IsInCache(HashString(acc.Username+acc.Host), v.UID)
+			ok, err := db.IsInCache(HashString(acc.User+acc.Address), v.UID)
 			if err != nil {
 
 				log.Fatal(err)
@@ -54,7 +55,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
 				continue
 			}
 
-			if err := db.AddMessageToCache(HashString(acc.Username+acc.Host), v.UID); err != nil {
+			if err := db.AddMessageToCache(HashString(acc.User+acc.Address), v.UID); err != nil {
 
 				log.Fatal(err)
 			}
@@ -65,14 +66,15 @@ func (cfg *ClientConfig) LaunchPOP3Client(wg *sync.WaitGroup, acc *Account) {
 				log.Fatal(err)
 			}
 
-			n := &notify.Message{
+			n := &notify.Notification{
 
-				Title:     fmt.Sprintf("From: %s ", m.Header.Get("From")),
-				Body:      fmt.Sprintf("Subject: %s ", m.Header.Get("Subject")),
-				Icon:      "mail-unread",
-				SoundPipe: LetterArriveSound,
+				Summary: fmt.Sprintf("From: %s ", m.Header.Get("From")),
+				Body:    fmt.Sprintf("Subject: %s ", m.Header.Get("Subject")),
+				AppIcon: "mail-unread",
+				Hints:   map[string]string{"sound-name": "message-new-email"},
+				Timeout: -1,
 			}
-			if err = n.Send(); err != nil {
+			if _, err = n.Send(); err != nil {
 
 				log.Fatal(err)
 			}

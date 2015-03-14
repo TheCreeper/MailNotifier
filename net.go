@@ -2,44 +2,39 @@ package main
 
 import (
 	"net"
-	"time"
 
 	"code.google.com/p/go.net/proxy"
 )
 
-type ConnHandler struct {
-	ProxyType     string
-	ProxyAddress  string
-	ProxyUsername string
-	ProxyPassword string
-	ProxyTimeout  int
+type ProxyConn struct {
+	Address  string
+	User     string
+	Password string
 }
 
-func (handler *ConnHandler) HandleConnection(network, addr string) (conn net.Conn, err error) {
+func NewConn(address string, p *Proxy) (conn net.Conn, err error) {
 
 	forwardDialer := &net.Dialer{
 
-		Timeout:   time.Duration(handler.ProxyTimeout) * time.Minute,
 		DualStack: true,
 	}
 
-	if len(handler.ProxyAddress) > 1 {
+	if p != nil {
 
 		auth := &proxy.Auth{
 
-			User:     handler.ProxyUsername,
-			Password: handler.ProxyPassword,
+			User:     p.User,
+			Password: p.Password,
 		}
 
 		// setup the socks proxy
-		dialer, err := proxy.SOCKS5("tcp", handler.ProxyAddress, auth, forwardDialer)
+		dialer, err := proxy.SOCKS5("tcp", p.Address, auth, forwardDialer)
 		if err != nil {
 
 			return nil, err
 		}
-
-		return dialer.Dial(network, addr)
+		return dialer.Dial("tcp", address)
 	}
 
-	return forwardDialer.Dial(network, addr)
+	return forwardDialer.Dial("tcp", address)
 }
