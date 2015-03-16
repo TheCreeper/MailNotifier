@@ -1,6 +1,8 @@
 Mail Notification Daemon
 =====================
 
+This is a desktop message notification daemon that can be left to run in the background to check multiple E-Mail accounts for new mail. POP3 is only supported for checking mail boxes and support for other protocols will be added in the future.
+
 ## Usage
 ```
 Usage of mnd:
