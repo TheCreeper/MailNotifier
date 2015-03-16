@@ -1,7 +1,7 @@
 Mail Notification Daemon
 =====================
 
-Usage:
+## Usage:
 ```
 Usage of mnd:
   -d="": The directory in which the database will be stored
@@ -10,21 +10,21 @@ Usage of mnd:
   -v=false: debugging/verbose information
 ```
 
-- Requirements
+## Requirements
 
 	- GNU/Linux only
 	- libnotify (GNU/Linux) for notifications
 
-- Features
+## Features
 
 	- Supports multiple accounts
 
-- TODO:
+## TODO:
 
 	- Support proxys
 	- Support Pushover
 
-Screenshot:
+## Screenshot
 
 The look of notifications will differ depending on your current window and icon theme. If your notification daemon supports playing sounds, it will also play the mail-unread sound which will also differ depending on the current theme.
 
