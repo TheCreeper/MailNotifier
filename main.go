@@ -33,7 +33,6 @@ var (
 func init() {
 
 	flag.BoolVar(&Verbose, "v", false, "debugging/verbose information")
-	//flag.BoolVar(&ShowIcon, "i", false, "Show a icon in the statusbar/tray")
 	flag.BoolVar(&GenConfig, "g", false, "Generate a configuration file")
 	flag.StringVar(&ConfigFile, "f", "", "The configuration file in which the user settings are stored")
 	flag.StringVar(&DatabaseFile, "d", "", "The directory in which the database will be stored")
