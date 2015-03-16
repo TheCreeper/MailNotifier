@@ -1,7 +1,7 @@
 Mail Notification Daemon
 =====================
 
-## Usage:
+## Usage
 ```
 Usage of mnd:
   -d="": The directory in which the database will be stored
@@ -19,7 +19,7 @@ Usage of mnd:
 
 	- Supports multiple accounts
 
-## TODO:
+## TODO
 
 	- Support proxys
 	- Support Pushover
