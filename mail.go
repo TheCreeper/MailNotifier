@@ -68,8 +68,8 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 
 			n := &notify.Notification{
 
-				Summary: fmt.Sprintf("From: %s To: %s", m.Header.Get("From"), m.Header.Get("To")),
-				Body:    fmt.Sprintf("Subject: %s ", m.Header.Get("Subject")),
+				Summary: fmt.Sprintf("From: %s", m.Header.Get("From")),
+				Body:    fmt.Sprintf("Subject: %s", m.Header.Get("Subject")),
 				AppIcon: "mail-unread",
 				Hints:   map[string]string{"sound-name": "message-new-email"},
 				Timeout: -1,

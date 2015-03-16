@@ -30,6 +30,6 @@ Usage of mnd:
 
 ## Screenshot
 
-The look of notifications will differ depending on your current window and icon theme. If your notification daemon (such as xfce4-notifyd) supports playing sounds, it will also play the "mail-unread" sound which will also differ depending on the current theme.
+The look of notifications will differ depending on your current window and icon theme. If your notification daemon (such as xfce4-notifyd) supports playing sounds, it wil play the "mail-unread" sound which may differ depending on the current theme.
 
 ![ScreenShot](http://apollo.firebit.co.uk/~dc0/imgsrc/2015-03-14--1426373296_524x342_scrot.png)
