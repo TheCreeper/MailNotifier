@@ -26,6 +26,6 @@ Usage of mnd:
 
 Screenshot:
 
-This look of the notifications will differ depending on your current window and icon theme. If your notification daemon supports playing sounds, it will also play the mail-unread sound which will also differ depending on the current theme.
+The look of the notifications will differ depending on your current window and icon theme. If your notification daemon supports playing sounds, it will also play the mail-unread sound which will also differ depending on the current theme.
 
 ![ScreenShot](http://apollo.firebit.co.uk/~dc0/imgsrc/2015-03-14--1426373296_524x342_scrot.png)
