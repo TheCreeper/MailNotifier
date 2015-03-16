@@ -23,6 +23,8 @@ Usage of mnd:
 
 	- Support proxys
 	- Support Pushover
+	- Support custom sounds
+	- Support playing sounds if notification daemon can not play them
 
 ## Screenshot
 
