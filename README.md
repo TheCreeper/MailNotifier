@@ -1,4 +1,4 @@
-Mail Notification Daemon
+Message Notification Daemon
 =====================
 
 This is a desktop message notification daemon that can be left to run in the background to check multiple E-Mail accounts for new mail. POP3 is only supported for checking mail boxes and support for other protocols will be added in the future.
@@ -30,6 +30,6 @@ Usage of mnd:
 
 ## Screenshot
 
-The look of notifications will differ depending on your current window and icon theme. If your notification daemon supports playing sounds, it will also play the mail-unread sound which will also differ depending on the current theme.
+The look of notifications will differ depending on your current window and icon theme. If your notification daemon (such as xfce4-notifyd) supports playing sounds, it will also play the "mail-unread" sound which will also differ depending on the current theme.
 
 ![ScreenShot](http://apollo.firebit.co.uk/~dc0/imgsrc/2015-03-14--1426373296_524x342_scrot.png)

@@ -9,7 +9,6 @@ import (
 )
 
 const (
-
 	// name of the table that is used for the message cache
 	MsgTableName = "MessageCache"
 

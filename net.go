@@ -12,7 +12,7 @@ type ProxyConn struct {
 	Password string
 }
 
-func NewConn(address string, p *Proxy) (conn net.Conn, err error) {
+func NewConn(p *Proxy, address string) (conn net.Conn, err error) {
 
 	forwardDialer := &net.Dialer{
 

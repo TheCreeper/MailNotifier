@@ -17,9 +17,6 @@ var (
 	// Debug/Verbose switch
 	Verbose bool
 
-	// Tray icon switch
-	//ShowIcon bool
-
 	// Generate sameple configuration switch
 	GenConfig bool
 
