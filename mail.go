@@ -19,7 +19,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 			log.Print(err)
 
 			time.Sleep(time.Duration(cfg.CheckFrequency) * time.Minute)
-			break
+			continue
 		}
 
 		if err = c.Auth(acc.User, acc.Password); err != nil {
