@@ -12,14 +12,18 @@ Usage of mnd:
   -v=false: debugging/verbose information
 ```
 
+You can use the -g flag to generate a sample configuration to stdout which can be redirected to a file (mnd -g > mnd.conf).
+The configuration filename should be mnd.conf and follows the freedesktop spec for finding config files.
+
 ## Requirements
 
 	- GNU/Linux only
-	- libnotify (GNU/Linux) for notifications
+	- Notification Daemon such as xfce4-notifyd
 
 ## Features
 
 	- Supports multiple accounts
+	- Supports custom notification sounds. Use file:// prefix to specify the location of a sound file in the config
 
 ## TODO
 
