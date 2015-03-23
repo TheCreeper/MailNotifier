@@ -11,6 +11,9 @@ import (
 
 const (
 
+	// Default app icon in the notification
+	DefaultNotificationIcon = "mail-unread"
+
 	// Default sound
 	DefaultNotificationSound = "message-new-email"
 
@@ -23,7 +26,10 @@ type ClientConfig struct {
 	// How often to query the POP3 server
 	CheckFrequency int
 
-	// The path to the notification sound. Will be set to default if nothing is specified
+	// The path to the notification icon. Will be set to the default if nothing is specified
+	NotificationIcon string
+
+	// The path to the notification sound. Default will be used if nothing is set
 	NotificationSound string
 
 	Proxys   []Proxy
@@ -51,6 +57,7 @@ func GenerateConfig() ([]byte, error) {
 	cfg := &ClientConfig{
 
 		CheckFrequency:    20,
+		NotificationIcon:  DefaultNotificationIcon,
 		NotificationSound: DefaultNotificationSound,
 
 		Proxys: []Proxy{
@@ -93,7 +100,21 @@ func (cfg *ClientConfig) GetProxyInfo(n string) (Proxy, error) {
 
 func (cfg *ClientConfig) Validate() (err error) {
 
-	// Set to default mail-unread if sound not specified
+	// Set to default if icon not specified
+	if len(cfg.NotificationIcon) == 0 {
+
+		cfg.NotificationIcon = DefaultNotificationIcon
+	}
+
+	if strings.HasPrefix(cfg.NotificationIcon, FilePrefix) {
+
+		trimmed := strings.TrimPrefix(cfg.NotificationIcon, FilePrefix)
+		cleaned := filepath.Clean(trimmed)
+
+		cfg.NotificationIcon = os.ExpandEnv(cleaned)
+	}
+
+	// Set to default if sound not specified
 	if len(cfg.NotificationSound) == 0 {
 
 		cfg.NotificationSound = DefaultNotificationSound

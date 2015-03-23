@@ -70,7 +70,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 
 				Summary: fmt.Sprintf("From: %s", m.Header.Get("From")),
 				Body:    fmt.Sprintf("Subject: %s", m.Header.Get("Subject")),
-				AppIcon: "mail-unread",
+				AppIcon: cfg.NotificationIcon,
 				Hints:   map[string]string{"sound-name": cfg.NotificationSound},
 				Timeout: notify.ExpiresDefault,
 			}

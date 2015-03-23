@@ -23,6 +23,7 @@ The configuration filename should be mnd.conf and follows the freedesktop spec f
 ## Features
 
 	- Supports multiple accounts
+	- Supports custom notification icons.
 	- Supports custom notification sounds. Use file:// prefix to specify the location of a sound file in the config
 
 ## TODO
