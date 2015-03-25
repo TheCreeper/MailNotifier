@@ -66,7 +66,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 				log.Fatal(err)
 			}
 
-			n := &notify.Notification{
+			ntf := &notify.Notification{
 
 				Summary: fmt.Sprintf("From: %s", m.Header.Get("From")),
 				Body:    fmt.Sprintf("Subject: %s", m.Header.Get("Subject")),
@@ -74,7 +74,7 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 				Hints:   map[string]string{"sound-name": cfg.NotificationSound},
 				Timeout: notify.ExpiresDefault,
 			}
-			if _, err = n.Send(); err != nil {
+			if _, err = ntf.Show(); err != nil {
 
 				log.Fatal(err)
 			}
