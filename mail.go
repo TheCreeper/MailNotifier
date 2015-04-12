@@ -17,7 +17,6 @@ func (cfg *ClientConfig) LaunchPOP3Client(acc *Account) {
 		if err != nil {
 
 			log.Print(err)
-
 			time.Sleep(time.Duration(cfg.CheckFrequency) * time.Minute)
 			continue
 		}

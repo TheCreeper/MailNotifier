@@ -73,7 +73,7 @@ func GenerateConfig() ([]byte, error) {
 		Accounts: []Account{
 
 			{
-				Address:  "pop3.riseup.net:995",
+				Address:  "pop.riseup.net:995",
 				User:     "example",
 				Password: "password",
 				Proxy:    "",
